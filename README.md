@@ -55,11 +55,3 @@
 | `generate_data.py` | 脱敏模拟数据的生成代码（固定种子，可复现） |
 | `data/` | 三张数据表 |
 | `output/` | 分析图表与 Excel 看板成品 |
-
-## 工具
-
-SQL（MySQL）· Python（Pandas / Matplotlib / openpyxl）· Excel
-
-## License
-
-MIT
