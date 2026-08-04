@@ -1,13 +1,41 @@
-# 汽车销售复盘分析（Car Sales BI Analysis）
+# 汽车销售复盘分析
 
-基于 8 万条脱敏汽车销售记录的全流程数据分析项目：从数据建模、SQL 业务分析、Python 可视化到 Excel BI 看板，覆盖"数据 → 洞察 → 展示"完整链路。
+以某汽车经销商 3 年 8 万条销售记录为对象的经营复盘分析。围绕"卖什么、什么时候卖、卖给谁、怎么卖"四个业务问题，用 SQL 完成数据提取与指标计算，用 Python 完成可视化呈现，最终汇总为一份 Excel BI 看板。
 
-## 项目亮点
 
-- **全流程闭环**：数据生成建模 → MySQL SQL 分析 → Python 多维可视化 → Excel 交互式 BI 看板
-- **双工具交叉验证**：同一套业务问题分别用 SQL 和 Pandas 实现，结果互相印证
-- **业务导向分析**：品牌/车型结构、月度趋势、区域对比、客户画像、支付方式、同比环比等 20 个分析主题
-- **可复现**：数据为程序生成的脱敏模拟数据（固定随机种子 42），无隐私风险，克隆即可运行
+## 分析框架
+
+| 业务问题 | 分析维度 | 方法 |
+|---|---|---|
+| 卖什么 | 品牌 / 车型 / 品类结构 | 销售额排行、均价对比、SUV vs 轿车 vs 新能源 |
+| 什么时候卖 | 时间趋势 | 月度走势、环比、年度同比、季节性 |
+| 卖给谁 | 客户画像 | 年龄段 × 性别交叉、客单价分布 |
+| 怎么卖 | 销售方式 | 全款 / 贷款 / 分期结构、折扣率、贷款渗透率 |
+| 谁来卖 | 团队效能 | 区域对比、销售人员业绩排名 |
+
+## 核心结论
+
+- **品牌格局**：大众以 35.0 亿元销售额居首（1.39 万台，走量路线）；宝马、奔驰销量不及大众，但凭借 32 万元以上的均价跻身前三，呈现"量"与"价"两条截然不同的营收路径
+- **品类结构**：SUV 是绝对主力，销售额 105.6 亿元（均价 25.3 万），约为轿车（76.1 亿、均价 19.9 万）的 1.4 倍
+- **季节规律**：销量呈明显的"年末冲高、春节回落"周期——每年 12 月前后冲量（2024 年末单月近 7.7 亿元），2 月春节跌入谷底，环比波动最高超过 ±50%
+- **客户画像**：26–35 岁为第一大购车人群（约 2.8 万人），男性客户数量全面高于女性；但各年龄段客单价几乎持平（约 21–22 万），说明消费力差异主要体现在"买不买"而非"买多贵"
+- **支付方式**：贷款购车占比 49.7% 已近半数，全款仅 30.3%，金融渗透率高，是影响成交的重要杠杆
+
+## 成果展示
+
+| 品牌营收排名 | 月度趋势 |
+|---|---|
+| ![品牌营收](output/01_brand_revenue.png) | ![月度趋势](output/02_monthly_trend.png) |
+
+| 区域分析 | 客户画像 |
+|---|---|
+| ![区域分析](output/03_region_analysis.png) | ![客户画像](output/04_customer_profile.png) |
+
+| 品类与支付 | 年度对比 |
+|---|---|
+| ![品类支付](output/05_category_payment.png) | ![年度对比](output/06_annual_comparison.png) |
+
+完整的交互式汇总见 `output/汽车销售BI分析看板.xlsx`（含 KPI 指标卡与联动图表）。
 
 ## 数据集
 
@@ -17,65 +45,21 @@
 | `salespersons` | 103 人 | 按区域、城市分布 |
 | `sales` | 80,000 条 | 2023–2025 年销售记录，含成交金额、客户性别 / 年龄段、支付方式、折扣率、是否贷款 |
 
-> 数据由 `generate_data.py` 生成的脱敏模拟数据，不包含任何真实客户或商业信息。
+## 文件说明
 
-## 项目结构
-
-```
-car-sales-analysis/
-├── generate_data.py      # 数据生成脚本（脱敏建模，种子固定可复现）
-├── analysis.sql          # MySQL 分析脚本（建表 + 20 个业务分析查询）
-├── visualize.py          # Python 可视化（6 张分析图表）
-├── excel_dashboard.py    # Excel BI 看板生成（KPI 指标卡 + 交互图表）
-├── data/                 # 三张数据表 CSV
-└── output/               # 分析图表 + 汽车销售BI分析看板.xlsx
-```
-
-## 分析主题
-
-**SQL 分析（analysis.sql）**：品牌与车型销售排行、月度 / 年度趋势、区域与城市对比、销售人员业绩、客户年龄与性别画像、支付方式与贷款渗透率、折扣力度分析、同比环比增长等。
-
-**Python 可视化（visualize.py）**：
-
-| 图表 | 内容 |
+| 文件 | 说明 |
 |---|---|
-| 01_brand_revenue | 品牌销售额排名 + 均价折线 |
-| 02_monthly_trend | 月度销量与销售额趋势 |
-| 03_region_analysis | 区域销售对比 |
-| 04_customer_profile | 客户画像（年龄段 × 性别） |
-| 05_category_payment | 品类结构与支付方式分布 |
-| 06_annual_comparison | 年度同比对比 |
+| `analysis.sql` | 全部业务指标的 SQL 实现（MySQL，建表 + 20 组分析查询） |
+| `visualize.py` | 6 张分析图表的生成代码（Pandas + Matplotlib） |
+| `excel_dashboard.py` | Excel BI 看板生成代码（openpyxl 原生图表） |
+| `generate_data.py` | 脱敏模拟数据的生成代码（固定种子，可复现） |
+| `data/` | 三张数据表 |
+| `output/` | 分析图表与 Excel 看板成品 |
 
-**Excel BI 看板（excel_dashboard.py）**：KPI 指标卡、月度趋势图、区域分布图、品类对比图，使用 openpyxl 原生图表，打开即可交互。
+## 工具
 
-## 快速开始
+SQL（MySQL）· Python（Pandas / Matplotlib / openpyxl）· Excel
 
-### 环境依赖
-
-```bash
-pip install pandas matplotlib openpyxl
-# SQL 部分需要 MySQL 8.0+
-```
-
-### 运行
-
-```bash
-# 1. 重新生成数据（可选，data/ 已自带）
-python generate_data.py
-
-# 2. SQL 分析：将 data/*.csv 导入 MySQL 后执行 analysis.sql
-
-# 3. 生成可视化图表（输出到 output/）
-python visualize.py
-
-# 4. 生成 Excel BI 看板
-python excel_dashboard.py
-```
-
-## 技术栈
-
-Python · Pandas · Matplotlib · openpyxl · MySQL
-
-##  License
+## License
 
 MIT
