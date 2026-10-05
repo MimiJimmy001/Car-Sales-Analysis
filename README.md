@@ -8,6 +8,16 @@
 以某汽车经销商 3 年 8 万条销售记录为对象的经营复盘分析。围绕"卖什么、什么时候卖、卖给谁、怎么卖"四个业务问题，用 SQL 完成数据提取与指标计算，用 Python 完成可视化呈现，最终汇总为一份 Excel BI 看板。
 
 
+## 快速开始
+
+```bash
+pip install -r requirements.txt
+python generate_data.py      # 按固定随机种子重建模拟数据
+python visualize.py          # 生成 6 张分析图
+python excel_dashboard.py    # 生成 Excel BI 看板
+```
+
+`analysis.sql` 为 MySQL 建表与 20 组分析查询，可按需在数据库中执行。
 ## 分析框架
 
 | 业务问题 | 分析维度 | 方法 |
