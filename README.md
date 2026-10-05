@@ -1,5 +1,10 @@
 # 汽车销售复盘分析
 
+> **数据声明**：本项目使用 `generate_data.py` 以固定随机种子生成的脱敏模拟数据，用于演示 SQL、Python 与 Excel BI 的完整分析流程；数字不代表任何真实企业。
+
+[![Syntax CI](https://github.com/MimiJimmy001/Car-Sales-Analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/MimiJimmy001/Car-Sales-Analysis/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 以某汽车经销商 3 年 8 万条销售记录为对象的经营复盘分析。围绕"卖什么、什么时候卖、卖给谁、怎么卖"四个业务问题，用 SQL 完成数据提取与指标计算，用 Python 完成可视化呈现，最终汇总为一份 Excel BI 看板。
 
 
